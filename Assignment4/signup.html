@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp - LMS</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <script>
+        function validateSignup(event) {
+            event.preventDefault(); 
+
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const email = document.getElementById('email').value;
+            const messageBox = document.getElementById("message-box");
+
+            messageBox.style.display = 'none';
+            let errorMessages = [];
+
+            const usernameRegex = /^[A-Za-z][A-Za-z0-9_-]{2,19}$/;
+            if (!usernameRegex.test(username)) {
+                errorMessages.push("Invalid Username: Username must be between 3 and 20 characters, and only letters, numbers, hyphens, and underscores are allowed.");
+            }
+
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\[\]{}|;:'",.<>?\/`~]).{8,}$/;
+            if (!passwordRegex.test(password)) {
+                errorMessages.push("Invalid Password: Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+            }
+
+            if (password !== confirmPassword) {
+                errorMessages.push("Passwords do not match.");
+            }
+
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            if (!emailRegex.test(email)) {
+                errorMessages.push("Invalid email: Not a valid email address.");
+            }
+
+            if (errorMessages.length > 0) {
+                messageBox.innerHTML = errorMessages.join('<br>');
+                messageBox.className = 'message-box';
+                messageBox.style.display = 'block';
+            } else {
+                messageBox.innerHTML = 'Signup successful! Redirecting to login...';
+                messageBox.className = 'message-box';
+                messageBox.style.display = 'block';
+
+                setTimeout(() => { 
+                    window.location.href = 'login.html'; 
+                }, 2000);
+            }
+        }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
+        <h1>LMS - Learning Management System</h1>
+    </header>
+    <div>
+        <nav class="nav">
+            <a href="index.html">Homepage</a>
+        </nav>
+    </div>
+    
+    <main class="signup">
+        <h2>Sign Up</h2>
+        <form onsubmit="validateSignup(event)">
+            <div class="signupcontainer">
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required><br>
+                
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required><br>
+
+                <label for="confirmPassword">Confirm Password:</label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required><br>
+               
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required><br>
+
+                <div>
+                    <button type="submit" class="signupbutton">Sign Up</button>
+                </div>
+            </div>
+        </form> 
+
+        <br><br>
+        <div id="message-box" class="message-box"></div>
+        <br><br>
+
+        <div class="haveaccount">
+            <a href="login.html">Already have an account? Login here</a>
+        </div>
+        
+        <br><br>
+
+    </main>     
+    <footer>
+        <p>&copy; 2025 LMS. All rights reserved.</p>
+    </footer>
+</body>
+</html>

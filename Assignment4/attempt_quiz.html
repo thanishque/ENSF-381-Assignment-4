@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attempt Quiz - LMS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="header">
+            <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
+            <h1>LMS - Learning Management System</h1>
+        </div>
+    </header>
+    <div>
+        <nav class="nav">
+            <a href="index.html">Homepage</a> | 
+            <a href="course_view.html">Courses</a> 
+        </nav>
+    </div>
+    <main>
+        <div class="banner">
+            <img src="banner.jpg" alt="Quiz Banner" style="width: 100%;">
+        </div>
+        <div class="detail">
+            <h2>Course: Web Development</h2>
+            <h2>Course Code: WD381</h2>
+            <p>Topic: HTML Basics</p>
+            <p>Last Date: February 10, 2025</p>
+            <p>Attempts Allowed: 1</p>
+        </div>
+
+        <div class="timer">
+            <h3>Time Remaining: <span id="timer">10:00</span></h3>
+        </div>
+
+        <div class="questions-list">
+            <h3>Question 1</h3>
+            <p>What does HTML stand for?</p>
+            <div class="question-1">
+                <input type="radio" id="q1a" name="q1" value="Hyper Text Markup Language">
+                <label for="q1a">Hyper Text Markup Language</label><br>
+                <input type="radio" id="q1b" name="q1" value="Home Tool Markup Language">
+                <label for="q1b">Home Tool Markup Language</label><br>
+            </div>
+            
+            <h3>Question 2</h3>
+            <p>Which of the following are HTML elements? (Select all that apply)</p>
+            <div class="question-2">
+                <input type="checkbox" id="q2a" name="q2" value="<div>">
+                <label for="q2a">&lt;div&gt;</label><br>
+                <input type="checkbox" id="q2b" name="q2" value="<span>">
+                <label for="q2b">&lt;span&gt;</label><br>
+                <input type="checkbox" id="q2c" name="q2" value="<xml>">
+                <label for="q2c">&lt;xml&gt;</label><br>
+            </div>  
+
+            <button id="submitQuiz" onclick="validateQuiz()">Submit Quiz</button>
+        </div> 
+    </main>
+
+    <footer>
+        <p>&copy; 2025 LMS. All rights reserved.</p>
+    </footer>
+    <script>
+        function displayTime(durationSeconds) {
+            const timerElement = document.getElementById("timer");
+            let timeRemaining = durationSeconds;
+
+            const timerInterval = setInterval(function () {
+                let minutes = Math.floor(timeRemaining / 60);
+                let seconds = timeRemaining % 60;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                timerElement.textContent = minutes + ':' + seconds;
+
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                } else {
+                    alert("Time's up! Redirecting to leaderboard...");
+                    window.location.href = "leaderboard.html";
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+            displayTime(10 * 60);
+        };
+
+        function validateQuiz() {
+            let isCheckedQ1 = document.querySelector('input[name="q1"]:checked');
+            let isCheckedQ2 = document.querySelectorAll('input[name="q2"]:checked');
+
+            if (!isCheckedQ1) {
+                alert("Please answer Question 1.");
+                return;
+            }
+
+            if (isCheckedQ2.length === 0) {
+                alert("Please select at least one option for Question 2.");
+                return;
+            }
+
+            pointCalculator();
+        }
+
+        function pointCalculator() {
+            let points = 0;
+
+            if (document.getElementById("q1a").checked) {
+                points += 50;
+            }
+
+            if (document.getElementById("q2a").checked) {
+                points += 25;
+            }
+            if (document.getElementById("q2b").checked) {
+                points += 25;
+            }
+
+            let score = points + "/100";
+            alert("Final Score: " + score);
+
+            setTimeout(() => {
+                window.location.href = "leaderboard.html";
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

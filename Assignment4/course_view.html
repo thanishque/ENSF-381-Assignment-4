@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course View - LMS</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <img src="logo.jpg" alt="LMS Logo" style="width: 100px; height: 100px;">
+        <h1>LMS - Learning Management System</h1>
+    </header>
+    <div>
+        <nav class="nav">
+            <a href="index.html">Homepage</a>
+        </nav>
+    </div>
+    <main> 
+        <div class="termview">
+            <label for="term">Select Term:</label>
+            <select id="term" name="term">
+                <option value="Winter 2025">Winter 2025</option>
+                <option value="Winter 2024">Winter 2024</option>
+                <option value="Fall 2025">Fall 2025</option>
+                <option value="Fall 2024">Fall 2024</option>
+            </select>
+        </div>
+        
+        <section class="Enrolled">
+            <div class="courses">
+                <h2>Enrolled Courses</h2>
+                <hr>
+                <table width="100%" id="enrolledCourses">
+                    <tr>
+                        <td>
+                            <div class="course-tile">
+                                <img src="course1.jpg" alt="Course 1" width="250">
+                                <p>Course Name: Web Development</p>
+                                <p>Course Code: WD381</p>
+                                <a href="attempt_quiz.html">Attempt Quiz</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="course-tile">
+                                <img src="course1.jpg" alt="Course 1" width="250">
+                                <p>Course Name: Data Structures</p>
+                                <p>Course Code: DS371</p>
+                                <a href="attempt_quiz.html">Attempt Quiz</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="course-tile">
+                                <img src="course1.jpg" alt="Course 1" width="250">
+                                <p>Course Name: DBMS</p>
+                                <p>Course Code: DB346</p>
+                                <a href="attempt_quiz.html">Attempt Quiz</a>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </section>
+
+        <br><br>
+            
+        <section class="pending">
+            <h2>Pending Invitations</h2>
+            <hr>
+            <table>
+                <tr id="pendingrow">
+                    <td>
+                        <div class="course-tile">
+                            <img src="course2.jpg" alt="Course 2" width="250">
+                            <p>Course Name: Data Science</p>
+                            <p>Course Code: DS102</p>
+                            <div class="pendingbuttons">
+                                <button class="accept" onclick="enrollClass(this)">Accept</button>
+                                <button class="decline" onclick="removeClass(this)">Decline</button>
+                            </div>
+                        </div>
+                    </td> 
+                    <td>
+                        <div class="course-tile">
+                            <img src="course2.jpg" alt="Course 2" width="250">
+                            <p>Course Name: Machine Learning</p>
+                            <p>Course Code: ML105</p>
+                            <div class="pendingbuttons">
+                                <button class="accept" onclick="enrollClass(this)">Accept</button>
+                                <button class="decline" onclick="removeClass(this)">Decline</button>
+                            </div>
+                        </div>
+                    </td> 
+                </tr>
+            </table>
+        </section>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 LMS. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript (Inline) -->
+    <script>
+        function enrollClass(button) {
+            var courseTile = button.closest("td"); // Get the course's <td>
+            var enrolledTable = document.getElementById("enrolledCourses").querySelector("tr");
+    
+            // Move course to enrolled section
+            enrolledTable.appendChild(courseTile);
+    
+            // Remove Accept/Decline buttons
+            courseTile.querySelector(".pendingbuttons").remove();
+    
+            // Change image to match enrolled courses
+            courseTile.getElementsByTagName('img')[0].src = "course1.jpg";
+    
+            // Add "Attempt Quiz" link properly inside the tile
+            var attemptQuiz = document.createElement('a');
+            attemptQuiz.innerHTML = 'Attempt Quiz';
+            attemptQuiz.href = "attempt_quiz.html";
+            courseTile.querySelector('.course-tile').appendChild(attemptQuiz);
+    
+            // Apply hover effect only to the tile, not the full td
+            courseTile.querySelector('.course-tile').addEventListener('mouseover', function() { hover(this); });
+            courseTile.querySelector('.course-tile').addEventListener('mouseout', function() { unhover(this); });
+        }
+    
+        function removeClass(button) {
+            var courseTile = button.closest("td"); // Get the course's <td>
+            courseTile.remove(); // Remove the course from pending list
+        }
+    
+        function hover(ele) {
+            ele.style.backgroundColor = "#ffffff"; // White on hover
+        }
+    
+        function unhover(ele) {
+            ele.style.backgroundColor = "#e6f2ff"; // Restore to original color when mouse leaves
+        }
+    </script>
+    
+</body>
+</html>
